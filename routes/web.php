@@ -11,16 +11,18 @@
 |
 */
 
-Route::get('/login', 'Auth\LoginController@login_page')->name('login.get');
+Route::get('/login', 'Auth\LoginController@login_page')->name('login');
 
-Route::post('/login', 'Auth\LoginController@login')->name('login.post');
+Route::post('/do_login', 'Auth\LoginController@login')->name('login.post');
 
 Route::group(['middleware' => 'auth'], function (){
 
-    Route::get('/', function () {
-        return view('home.index');
-    });
+    Route::get('/', 'HomeController@index')->name('home.index');
 
 
 
 });
+
+Auth::routes();
+
+

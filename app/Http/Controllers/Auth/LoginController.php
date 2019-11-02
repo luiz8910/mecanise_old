@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\UserRepository;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -27,15 +30,20 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
         $this->middleware('guest')->except('logout');
+        $this->userRepository = $userRepository;
     }
 
     public function login_page()
@@ -45,6 +53,22 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        $credentials = $request->only('email', 'password');
 
+        $remember = $request->get('remember') ? true : false;
+
+        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], $remember)) {
+            // Authentication passed...
+            return redirect()->intended('/');
+        }
+
+        return redirect()->back()->withInput();
     }
 }
+
+
+
+
+
+
+

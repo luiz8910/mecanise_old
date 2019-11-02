@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
@@ -18,7 +19,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable implements Transformable
 {
-    use TransformableTrait, Notifiable;
+    use TransformableTrait, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -35,6 +36,10 @@ class User extends Authenticatable implements Transformable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    protected $dates = [
+        'deleted_at'
     ];
 
 }

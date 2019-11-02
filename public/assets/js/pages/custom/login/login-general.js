@@ -100,7 +100,7 @@ var KTLoginGeneral = function() {
                 	// similate 2s delay
                 	setTimeout(function() {
 	                    btn.removeClass('kt-spinner kt-spinner--right kt-spinner--sm kt-spinner--light').attr('disabled', false);
-	                    showErrorMsg(form, 'danger', 'Incorrect username or password. Please try again.');
+	                    showErrorMsg(form, 'danger', 'Email ou senha incorretas. Tente novamente');
                     }, 2000);
                 }
             });
@@ -200,7 +200,7 @@ var KTLoginGeneral = function() {
 	                    signInForm.clearForm();
 	                    signInForm.validate().resetForm();
 
-	                    showErrorMsg(signInForm, 'success', 'Cool! Password recovery instruction has been sent to your email.');
+	                    showErrorMsg(signInForm, 'success', 'Sucesso! As instruções foram enviadas para seu email');
                 	}, 2000);
                 }
             });

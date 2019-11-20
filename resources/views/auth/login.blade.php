@@ -125,13 +125,24 @@ License: You must have a valid license purchased only from themeforest(the above
                                     <form class="kt-form" method="POST" action="{{ route('login.post') }}">
                                         @csrf
                                         <div class="form-group">
-                                            <input class="form-control" type="text" placeholder="Email" name="email" autocomplete="off" required>
+
+                                            @if(Session::has('wrong-login'))
+                                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                                    <div class="alert-text">{{ Session::get('wrong-login') }}</div>
+                                                    <div class="alert-close">
+                                                        <i class="flaticon2-cross kt-icon-sm" data-dismiss="alert"></i>
+                                                    </div>
+                                                </div>
+                                            @endif
+
+                                            <input class="form-control" type="text" placeholder="Email" name="email" id="email" autocomplete="off" required>
 
                                             @if ($errors->has('email'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('email') }}</strong>
                                                 </span>
                                             @endif
+
                                         </div>
                                         <div class="form-group">
                                             <input id="password" type="password" placeholder="Senha" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }} form-control-last" name="password" required>
@@ -153,7 +164,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
                                         </div>
                                         <div class="kt-login__actions">
-                                            <button id="kt_login_signin_submit" class="btn btn-dark btn-pill btn-elevate" type="submit">Entrar</button>
+                                            <button id="btn_login_submit" class="btn btn-dark btn-pill btn-elevate" type="submit">Entrar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -251,6 +262,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <!--begin::Page Scripts(used by this page) -->
 <script src="assets/js/pages/custom/login/login-general.js" type="text/javascript"></script>
+<script src="js/login.js" type="text/javascript"></script>
 
 <!--end::Page Scripts -->
 </body>

@@ -72,6 +72,8 @@ var KTLoginGeneral = function() {
 
     var handleSignInFormSubmit = function() {
         $('#kt_login_signin_submit').click(function(e) {
+
+
             e.preventDefault();
             var btn = $(this);
             var form = $(this).closest('form');

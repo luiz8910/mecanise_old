@@ -27,7 +27,7 @@ class User extends Authenticatable implements Transformable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'person_id', 'workshop_id'
     ];
 
     protected $hidden = [
@@ -41,5 +41,15 @@ class User extends Authenticatable implements Transformable
     protected $dates = [
         'deleted_at'
     ];
+
+    public function person()
+    {
+        return $this->belongsTo(Person::class);
+    }
+
+    public function workshop()
+    {
+        return $this->belongsTo(Workshop::class);
+    }
 
 }

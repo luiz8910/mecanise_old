@@ -53,14 +53,24 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
         $credentials = $request->only('email', 'password');
 
         $remember = $request->get('remember') ? true : false;
 
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], $remember)) {
             // Authentication passed...
+
+            $user = $this->userRepository->findByField('email', $credentials['email'])->first();
+
+            session(['workshop' => $user->workshop_id]);
+
+            auth()->loginUsingId($user->id);
+
             return redirect()->intended('/');
         }
+
+        $request->session()->flash('wrong-login', 'Email ou senha inválidas');
 
         return redirect()->back()->withInput();
     }

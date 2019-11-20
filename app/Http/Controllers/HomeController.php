@@ -2,18 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\PersonRepository;
+use App\Repositories\UserRepository;
+use App\Traits\Config;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    use Config;
+    /**
+     * @var PersonRepository
+     */
+    private $personRepository;
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(PersonRepository $personRepository, UserRepository $userRepository)
     {
         $this->middleware('auth');
+        $this->personRepository = $personRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -23,6 +39,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home.index');
+        $route = 'home.index';
+
+        return view('index', compact('route'));
     }
 }

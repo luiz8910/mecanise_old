@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/login', 'Auth\LoginController@login_page')->name('login');
 
 Route::post('/do_login', 'Auth\LoginController@login')->name('login.post');
@@ -19,7 +20,9 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::get('/', 'HomeController@index')->name('home.index');
 
+    Route::get('/home', 'HomeController@index');
 
+    Route::get('/usuarios', 'PersonController@index')->name('person.index');
 
 });
 

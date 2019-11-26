@@ -121,6 +121,11 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="assets/css/skins/brand/dark.css" rel="stylesheet" type="text/css"/>
     <link href="assets/css/skins/aside/dark.css" rel="stylesheet" type="text/css"/>
 
+    @if(isset($links))
+        @foreach($links as $link)
+            <link rel="stylesheet" href="{{ $link }}" type="text/css">
+        @endforeach
+    @endif
     <!--end::Layout Skins -->
     <link rel="shortcut icon" href="logo/logo_bw.jpeg"/>
 </head>
@@ -282,10 +287,10 @@ License: You must have a valid license purchased only from themeforest(the above
                                                         class="kt-menu__link "><i
                                                             class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
                                                             class="kt-menu__link-text">List - Columns 2</span></a></li>
-                                                <li class="kt-menu__item " aria-haspopup="true"><a
-                                                        href="custom/apps/user/add-user.html" class="kt-menu__link "><i
-                                                            class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
-                                                            class="kt-menu__link-text">Add User</span></a></li>
+                                                <li class="kt-menu__item " aria-haspopup="true">
+                                                    <a href="{{ route('person.create') }}" class="kt-menu__link ">
+                                                        <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
+                                                            class="kt-menu__link-text">Adicionar Usuário</span></a></li>
                                                 <li class="kt-menu__item " aria-haspopup="true"><a
                                                         href="custom/apps/user/edit-user.html" class="kt-menu__link "><i
                                                             class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span
@@ -4734,8 +4739,11 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <!--end::Page Vendors -->
 
-<!--begin::Page Scripts(used by this page) -->
-<script src="assets/js/pages/dashboard.js" type="text/javascript"></script>
+@if(isset($scripts))
+    @foreach($scripts as $script)
+        <script src="{{ $script }}" type="text/javascript"></script>
+    @endforeach
+@endif
 
 <!--end::Page Scripts -->
 </body>

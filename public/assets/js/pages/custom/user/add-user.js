@@ -45,7 +45,7 @@ var KTUserAdd = function () {
 					required: true
 				},
 				profile_last_name: {
-					required: true
+					required: false
 				},
 				profile_phone: {
 					required: true
@@ -61,8 +61,8 @@ var KTUserAdd = function () {
 				KTUtil.scrollTop();
 
 				swal.fire({
-					"title": "",
-					"text": "There are some errors in your submission. Please correct them.",
+					"title": "Atenção",
+					"text": "Existem alguns campos a serem preenchidos",
 					"type": "error",
 					"buttonStyling": false,
 					"confirmButtonClass": "btn btn-brand btn-sm btn-bold"

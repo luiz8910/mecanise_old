@@ -24,6 +24,8 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::get('/usuarios', 'PersonController@index')->name('person.index');
 
+    Route::get('/criar-usuario', 'PersonController@create')->name('person.create');
+
 });
 
 Auth::routes();

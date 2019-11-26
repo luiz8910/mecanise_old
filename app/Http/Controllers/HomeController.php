@@ -41,6 +41,8 @@ class HomeController extends Controller
     {
         $route = 'home.index';
 
-        return view('index', compact('route'));
+        $scripts[] = 'assets/js/pages/dashboard.js';
+
+        return view('index', compact('route', 'scripts'));
     }
 }

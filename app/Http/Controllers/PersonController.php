@@ -53,7 +53,19 @@ class PersonController extends Controller
 
         $route = 'people.list-default';
 
-        return view('index', compact('route', 'people'));
+        foreach ($people as $person)
+        {
+            $person->initials = $this->initials($person->name);
+
+            $person->role_name = $this->rolesRepository->findByField('id', $person->role_id)->first() ?
+                $this->rolesRepository->findByField('id', $person->role_id)->first()->name : 'Cargo não definido';
+
+            $person->created_at_str = date_format(date_create($person->created_at), 'd/m/Y');
+        }
+
+        $people_qtde = count($people);
+
+        return view('index', compact('route', 'people', 'people_qtde'));
     }
 
     public function employees()
@@ -67,6 +79,17 @@ class PersonController extends Controller
 
         return $people;
         //TODO: return view
+    }
+
+    public function create()
+    {
+        $links[] = 'assets/css/pages/wizard/wizard-4.css';
+
+        $scripts[] = 'assets/js/pages/custom/user/add-user.js';
+
+        $route = 'people.create';
+
+        return view('index', compact('links', 'route'));
     }
 
     public function store(Request $request)

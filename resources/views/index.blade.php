@@ -4739,6 +4739,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <!--end::Page Vendors -->
 
+<script src="js/common.js"></script>
 @if(isset($scripts))
     @foreach($scripts as $script)
         <script src="{{ $script }}" type="text/javascript"></script>

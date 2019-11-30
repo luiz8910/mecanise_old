@@ -43,4 +43,9 @@ class Person extends Model implements Transformable
         return $this->hasOne(Roles::class);
     }
 
+    public function vehicle()
+    {
+        return $this->hasMany(Vehicle::class);
+    }
+
 }

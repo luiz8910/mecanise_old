@@ -22,6 +22,7 @@ class CreateCarsTable extends Migration
             $table->string('year')->nullable();
             $table->string('version')->nullable();
             $table->string('fuel')->nullable();
+            $table->string('picture')->nullable();
             $table->timestamps();
             $table->softDeletes();
 		});

@@ -22,7 +22,7 @@ class Car extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'model', 'brand', 'year', 'version', 'fuel'
+        'model', 'brand', 'year', 'version', 'fuel', 'picture'
     ];
 
     protected $dates = ['deleted_at'];

@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/home', 'HomeController@index');
 
     /**
-     * Crud Usuários
+     * Crud Users
      */
     Route::get('/usuarios', 'PersonController@index')->name('person.index');
 
@@ -38,10 +38,10 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::put('/person/{id}', 'PersonController@update')->name('person.update');
 
-    Route::delete('/delete-person/{id}', 'PersonController@delete');
+    Route::delete('/person/{id}', 'PersonController@delete');
 
     /**
-     * Crud Veículos
+     * Crud Vehicles
      */
     Route::get('/veiculos', 'VehicleController@index')->name('vehicle.index');
 
@@ -53,10 +53,74 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::put('/vehicle/{id}', 'VehicleController@update')->name('vehicle.update');
 
-    Route::delete('/delete-vehicle/{id}', 'VehicleController@delete');
+    Route::delete('/vehicle/{id}', 'VehicleController@delete');
 
     Route::get('/vehicle_by_owner/{id}', 'VehicleController@vehicle_by_owner')->name('vehicle.by.owner');
 
+    /**
+     * Crud Products
+     */
+    Route::get('/produtos', 'ProductController@index')->name('product.index');
+
+    //List products by category
+    Route::get('/produtos_categoria/{id}', 'ProductController@list_by_category')->name('product.by.category');
+
+    Route::get('/novo_produto', 'ProductController@create')->name('product.create');
+
+    Route::get('/editar_produto/{id}', 'ProductController@edit')->name('product.edit');
+
+    Route::post('/product', 'ProductController@store')->name('product.store');
+
+    Route::put('/product/{id}', 'ProductController@update')->name('product.update');
+
+    Route::delete('/product/{id}', 'ProductController@delete')->name('product.delete');
+
+    /**
+     * Crud Services
+     */
+    Route::get('/servicos', 'ServiceController@index')->name('service.index');
+
+    Route::get('/novo_servico', 'ServiceController@create')->name('service.create');
+
+    Route::get('/editar_servico/{id}', 'ServiceController@edit')->name('service.edit');
+
+    Route::post('/service', 'ServiceController@store')->name('service.store');
+
+    Route::put('/service/{id}', 'ServiceController@update')->name('service.update');
+
+    Route::delete('/service/{id}', 'ServiceController@delete')->name('service.delete');
+
+    /**
+     * Crud Diagnóstico
+     */
+    Route::get('/diagnosticos', 'DiagnosisController@index')->name('diagnosis.index');
+
+    Route::get('/novo_diagnostico', 'DiagnosisController@create')->name('diagnosis.create');
+
+    Route::get('/editar_diagnostico/{id}', 'DiagnosisController@edit')->name('diagnosis.edit');
+
+    Route::post('/diagnosis', 'DiagnosisController@store')->name('diagnosis.store');
+
+    Route::put('/diagnosis/{id}', 'DiagnosisController@update')->name('diagnosis.update');
+
+    Route::delete('/diagnosis/{id}', 'DiagnosisController@delete')->name('diagnosis.delete');
+
+    /**
+     * Crud Checklist
+     */
+    Route::get('/checklist', 'ChecklistController@index')->name('checklist.index');
+
+    Route::get('/checklist_veiculo/{id}', 'ChecklistController@list_by_vehicle')->name('checklist.by.vehicle');
+
+    Route::get('/novo_checklist', 'ChecklistController@create')->name('checklist.create');
+
+    Route::get('/editar_checklist/{id}', 'ChecklistController@edit')->name('checklist.edit');
+
+    Route::post('/checklist', 'ChecklistsController@store')->name('checklist.store');
+
+    Route::put('/checklist/{id}', 'ChecklistController@update')->name('checklist.update');
+
+    Route::delete('/checklist/{id}', 'ChecklistsController@delete')->name('checklist.delete');
 
 });
 

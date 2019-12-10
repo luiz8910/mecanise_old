@@ -6,7 +6,7 @@ $(function () {
 function delete_person(id)
 {
     var request = $.ajax({
-        url: '/delete-person/' + id,
+        url: '/person/' + id,
         method: 'DELETE',
         dataType: 'json'
     });
@@ -32,7 +32,7 @@ function delete_person(id)
                 text: 'Um erro ocorreu, tente novamente mais tarde',
                 type: 'danger',
                 confirmButtonClass: 'btn btn-danger'
-            }
+            };
 
             swal(data);
         }
@@ -47,7 +47,7 @@ function delete_person(id)
             text: 'Um erro ocorreu, tente novamente mais tarde',
             type: 'danger',
             confirmButtonClass: 'btn btn-danger'
-        }
+        };
 
         swal(data);
     })

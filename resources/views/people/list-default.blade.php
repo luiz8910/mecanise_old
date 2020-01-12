@@ -171,7 +171,7 @@
                             </div>
                             <div class="kt-widget__content">
                                 <div class="kt-widget__head">
-                                    <a href="#" class="kt-widget__username">
+                                    <a href="{{ route('person.edit', ['id' => $person->id]) }}" class="kt-widget__username">
                                         {{ $person->name }}
                                         @if($person->role_name == "Administrador")
                                             <i class="flaticon2-correct kt-font-success"></i>

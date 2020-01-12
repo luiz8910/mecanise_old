@@ -30,6 +30,8 @@ Route::group(['middleware' => 'auth'], function (){
      */
     Route::get('/usuarios', 'PersonController@index')->name('person.index');
 
+    Route::get('/tabela-usuarios', 'PersonController@index_table')->name('person.table');
+
     Route::get('/criar-usuario', 'PersonController@create')->name('person.create');
 
     Route::get('/editar-usuario/{id}', 'PersonController@edit')->name('person.edit');

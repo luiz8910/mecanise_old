@@ -1,0 +1,8 @@
+.border-red{
+    border: 1px solid red;
+}
+
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+}

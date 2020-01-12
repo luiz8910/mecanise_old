@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\PersonRepository;
 use App\Repositories\RolesRepository;
+use App\Repositories\StatesRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\WorkshopRepository;
 use App\Traits\Config;
@@ -32,15 +33,21 @@ class PersonController extends Controller
      * @var UserRepository
      */
     private $userRepository;
+    /**
+     * @var StatesRepository
+     */
+    private $statesRepository;
 
     public function __construct(PersonRepository $repository, UserRepository $userRepository,
-                                WorkshopRepository $workshopRepository, RolesRepository $rolesRepository)
+                                WorkshopRepository $workshopRepository, RolesRepository $rolesRepository,
+                                StatesRepository $statesRepository)
     {
 
         $this->repository = $repository;
         $this->workshopRepository = $workshopRepository;
         $this->rolesRepository = $rolesRepository;
         $this->userRepository = $userRepository;
+        $this->statesRepository = $statesRepository;
     }
 
     public function index()
@@ -69,6 +76,34 @@ class PersonController extends Controller
         return view('index', compact('route', 'people', 'people_qtde'));
     }
 
+    public function index_table()
+    {
+        $scripts[] = 'assets/js/pages/crud/metronic-datatable/base/html-table.js';
+
+        $workshop = $this->workshopRepository->findByField('id', $this->get_user_workshop())->first();
+
+        if($workshop)
+        {
+            $people = $workshop->people;
+        }
+
+        $route = 'people.list-table';
+
+        foreach ($people as $person)
+        {
+            $person->initials = $this->initials($person->name);
+
+            $person->role_name = $this->rolesRepository->findByField('id', $person->role_id)->first() ?
+                $this->rolesRepository->findByField('id', $person->role_id)->first()->name : 'Cargo não definido';
+
+            $person->created_at_str = date_format(date_create($person->created_at), 'd/m/Y');
+        }
+
+        $people_qtde = count($people);
+
+        return view('index', compact('route', 'people', 'people_qtde', 'scripts'));
+    }
+
     public function employees()
     {
         $workshop = $this->workshopRepository->findByField('id', $this->get_user_workshop())->first();
@@ -84,13 +119,22 @@ class PersonController extends Controller
 
     public function create()
     {
-        $links[] = 'assets/css/pages/wizard/wizard-4.css';
+        $links[] = '../../assets/css/pages/wizard/wizard-4.css';
 
-        $scripts[] = 'assets/js/pages/custom/user/add-user.js';
+        //$scripts[] = '../../assets/js/pages/custom/user/add-user.js';
+        $scripts[] = '../../js/person.js';
+        $scripts[] = '../../js/address.js';
+        $scripts[] = '../../assets/js/pages/crud/forms/widgets/bootstrap-maxlength.js';
 
-        $route = 'people.create';
+        $route = 'people.form';
 
-        return view('index', compact('links', 'route'));
+        $roles = $this->rolesRepository->all();
+
+        $states = $this->statesRepository->all();
+
+        $edit = false;
+
+        return view('index', compact('links', 'route', 'roles', 'scripts', 'states', 'edit'));
     }
 
     //$id = person id
@@ -100,13 +144,22 @@ class PersonController extends Controller
 
         if($person)
         {
-            $links[] = 'assets/css/pages/wizard/wizard-4.css';
+            $links[] = '../../assets/css/pages/wizard/wizard-4.css';
 
-            $scripts[] = 'assets/js/pages/custom/user/add-user.js';
+            //$scripts[] = '../../assets/js/pages/custom/user/add-user.js';
+            $scripts[] = '../../js/person.js';
+            $scripts[] = '../../js/address.js';
+            $scripts[] = '../../assets/js/pages/crud/forms/widgets/bootstrap-maxlength.js';
 
-            $route = 'people.edit';
+            $route = 'people.form';
 
-            return view('index', compact('links', 'route', 'person'));
+            $roles = $this->rolesRepository->all();
+
+            $states = $this->statesRepository->all();
+
+            $edit = true;
+
+            return view('index', compact('links', 'route', 'person', 'roles', 'scripts', 'states', 'edit'));
         }
 
         Session::flash('error.msg', 'Usuário não existe');

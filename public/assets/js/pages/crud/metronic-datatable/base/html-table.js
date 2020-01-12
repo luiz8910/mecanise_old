@@ -24,21 +24,22 @@ var KTDatatableHtmlTableDemo = function() {
 					type: 'date',
 					format: 'YYYY-MM-DD',
 				}, {
-					field: 'Status',
-					title: 'Status',
+					field: 'Tipo',
+					title: 'Tipo',
 					autoHide: false,
 					// callback function support for column rendering
 					template: function(row) {
 						var status = {
-							1: {'title': 'Pending', 'class': 'kt-badge--brand'},
+							1: {'title': 'Funcionário', 'class': 'kt-badge--brand'},
 							2: {'title': 'Delivered', 'class': ' kt-badge--danger'},
 							3: {'title': 'Canceled', 'class': ' kt-badge--primary'},
-							4: {'title': 'Success', 'class': ' kt-badge--success'},
+							4: {'title': 'Cliente', 'class': ' kt-badge--success'},
 							5: {'title': 'Info', 'class': ' kt-badge--info'},
 							6: {'title': 'Danger', 'class': ' kt-badge--danger'},
-							7: {'title': 'Warning', 'class': ' kt-badge--warning'},
+							7: {'title': 'Administrador', 'class': ' kt-badge--warning'},
 						};
-						return '<span class="kt-badge ' + status[row.Status].class + ' kt-badge--inline kt-badge--pill">' + status[row.Status].title + '</span>';
+
+						//return '<span class="kt-badge ' + status[row.Status].class + ' kt-badge--inline kt-badge--pill">' + status[row.Status].title + '</span>';
 					},
 				}, {
 					field: 'Type',
@@ -51,7 +52,7 @@ var KTDatatableHtmlTableDemo = function() {
 							2: {'title': 'Retail', 'state': 'primary'},
 							3: {'title': 'Direct', 'state': 'success'},
 						};
-						return '<span class="kt-badge kt-badge--' + status[row.Type].state + ' kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-' +status[row.Type].state + '">' +	status[row.Type].title + '</span>';
+						//return '<span class="kt-badge kt-badge--' + status[row.Type].state + ' kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-' +status[row.Type].state + '">' +	status[row.Type].title + '</span>';
 					},
 				},
 			],

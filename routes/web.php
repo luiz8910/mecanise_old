@@ -124,6 +124,15 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::delete('/checklist/{id}', 'ChecklistsController@delete')->name('checklist.delete');
 
+    /**
+     * Cars
+     */
+    Route::get('/carros', 'CarController@index')->name('cars.index');
+
+    Route::get('/novo-carro', 'CarController@create')->name('cars.create');
+
+    Route::get('/car_exists/{model}', 'CarController@car_exists');
+
 });
 
 Auth::routes();

@@ -8,6 +8,7 @@ use App\Repositories\VehicleRepository;
 use App\Traits\Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Psr\Container\NotFoundExceptionInterface;
 
 class VehicleController extends Controller
 {
@@ -36,9 +37,11 @@ class VehicleController extends Controller
     {
         $vehicles = $this->repository->findByField('workshop_id', $this->get_user_workshop());
 
+        $scripts[] = '../../assets/js/pages/crud/metronic-datatable/base/data-json.js';
+
         $route = 'vehicles.index';
 
-        return view('index', compact('vehicles', 'route'));
+        return view('index', compact('vehicles', 'route', 'scripts'));
     }
 
     /**
@@ -63,9 +66,18 @@ class VehicleController extends Controller
     {
         $cars = $this->carRepository->all();
 
-        $route = 'vehicles.create';
+        $route = 'vehicles.form';
 
-        return view('index', compact('cars', 'route'));
+        $edit = false;
+
+        $links[] = '../../assets/css/pages/wizard/wizard-4.css';
+
+        //$scripts[] = '../../assets/js/pages/custom/user/add-user.js';
+        $scripts[] = '../../js/vehicle.js';
+        $scripts[] = '../../assets/js/pages/crud/forms/widgets/bootstrap-maxlength.js';
+        $scripts[] = '../../assets/js/pages/crud/forms/widgets/select2.js';
+
+        return view('index', compact('cars', 'route', 'links', 'scripts', 'edit'));
     }
 
     /**
@@ -76,9 +88,25 @@ class VehicleController extends Controller
     {
         $cars = $this->carRepository->all();
 
-        $route = 'vehicles.edit';
+        $route = 'vehicles.form';
 
-        return view('index', compact('cars', 'route'));
+        $edit = true;
+
+        $links[] = '../../assets/css/pages/wizard/wizard-4.css';
+
+        //$scripts[] = '../../assets/js/pages/custom/user/add-user.js';
+        $scripts[] = '../../js/vehicle.js';
+        $scripts[] = '../../assets/js/pages/crud/forms/widgets/bootstrap-maxlength.js';
+        $scripts[] = '../../assets/js/pages/crud/forms/widgets/select2.js';
+
+        $vehicle = $this->repository->findByField('id', $id)->first();
+
+        if($vehicle)
+        {
+            return view('index', compact('cars', 'route', 'edit', 'links', 'scripts', 'vehicle'));
+        }
+
+        abort(404);
     }
 
     /**

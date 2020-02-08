@@ -11,7 +11,7 @@ var KTDatatableJsonRemoteDemo = function () {
 			// datasource definition
 			data: {
 				type: 'remote',
-				source: 'https://keenthemes.com/metronic/tools/preview/api/datatables/datasource/default.json',
+				source: '../../json/vehicles.json',
 				pageSize: 10,
 			},
 
@@ -41,22 +41,18 @@ var KTDatatableJsonRemoteDemo = function () {
 					selector: {class: 'kt-checkbox--solid'},
 					textAlign: 'center',
 				}, {
-					field: 'OrderID',
-					title: 'Order ID',
+					field: 'vehicle_id',
+					title: 'Código',
 				}, {
-					field: 'Country',
-					title: 'Country',
-					template: function(row) {
-						return row.Country + ' ' + row.ShipCountry;
-					},
+					field: 'model',
+					title: 'Modelo',
+
 				}, {
-					field: 'ShipAddress',
-					title: 'Ship Address',
+					field: 'brand',
+					title: 'Montadora',
 				}, {
-					field: 'ShipDate',
-					title: 'Ship Date',
-					type: 'date',
-					format: 'MM/DD/YYYY',
+					field: 'year',
+					title: 'Ano',
 				}, {
 					field: 'Status',
 					title: 'Status',
@@ -66,50 +62,26 @@ var KTDatatableJsonRemoteDemo = function () {
 							1: {'title': 'Pending', 'class': 'kt-badge--brand'},
 							2: {'title': 'Delivered', 'class': ' kt-badge--danger'},
 							3: {'title': 'Canceled', 'class': ' kt-badge--primary'},
-							4: {'title': 'Success', 'class': ' kt-badge--success'},
+							4: {'title': 'Concluído', 'class': ' kt-badge--success'},
 							5: {'title': 'Info', 'class': ' kt-badge--info'},
-							6: {'title': 'Danger', 'class': ' kt-badge--danger'},
-							7: {'title': 'Warning', 'class': ' kt-badge--warning'},
+							6: {'title': 'Atrasado', 'class': ' kt-badge--danger'},
+							7: {'title': 'Informar o andamento', 'class': ' kt-badge--warning'},
 						};
 						return '<span class="kt-badge ' + status[row.Status].class + ' kt-badge--inline kt-badge--pill">' + status[row.Status].title + '</span>';
 					},
 				}, {
-					field: 'Type',
-					title: 'Type',
-					autoHide: false,
-					// callback function support for column rendering
-					template: function(row) {
-						var status = {
-							1: {'title': 'Online', 'state': 'danger'},
-							2: {'title': 'Retail', 'state': 'primary'},
-							3: {'title': 'Direct', 'state': 'success'},
-						};
-						return '<span class="kt-badge kt-badge--' + status[row.Type].state + ' kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-' + status[row.Type].state + '">' +
-								status[row.Type].title + '</span>';
-					},
-				}, {
 					field: 'Actions',
-					title: 'Actions',
+					title: 'Opções',
 					sortable: false,
 					width: 110,
 					autoHide: false,
 					overflow: 'visible',
 					template: function() {
 						return '\
-						<div class="dropdown">\
-							<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown">\
-                                <i class="la la-ellipsis-h"></i>\
-                            </a>\
-						  	<div class="dropdown-menu dropdown-menu-right">\
-						    	<a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>\
-						    	<a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>\
-						    	<a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>\
-						  	</div>\
-						</div>\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">\
-							<i class="la la-edit"></i>\
+						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Exibir OS">\
+							<i class="la la-file-pdf-o"></i>\
 						</a>\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete">\
+						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Excluir">\
 							<i class="la la-trash"></i>\
 						</a>\
 					';

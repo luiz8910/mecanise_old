@@ -4,22 +4,22 @@ var KTSelect2 = function() {
     var demos = function() {
         // basic
         $('#kt_select2_1, #kt_select2_1_validate').select2({
-            placeholder: "Select a state"
+            placeholder: "Escolha uma Opção"
         });
 
         // nested
         $('#kt_select2_2, #kt_select2_2_validate').select2({
-            placeholder: "Select a state"
+            placeholder: "Escolha uma Opção"
         });
 
         // multi select
         $('#kt_select2_3, #kt_select2_3_validate').select2({
-            placeholder: "Select a state",
+            placeholder: "Escolha uma Opção",
         });
 
         // basic
         $('#kt_select2_4').select2({
-            placeholder: "Select a state",
+            placeholder: "Escolha uma Opção",
             allowClear: true
         });
 
@@ -42,7 +42,7 @@ var KTSelect2 = function() {
         }];
 
         $('#kt_select2_5').select2({
-            placeholder: "Select a value",
+            placeholder: "Escolha uma Opção",
             data: data
         });
 
@@ -115,23 +115,23 @@ var KTSelect2 = function() {
 
         // disabled mode
         $('#kt_select2_7').select2({
-            placeholder: "Select an option"
+            placeholder: "Escolha uma Opção"
         });
 
         // disabled results
         $('#kt_select2_8').select2({
-            placeholder: "Select an option"
+            placeholder: "Escolha uma Opção"
         });
 
         // limiting the number of selections
         $('#kt_select2_9').select2({
-            placeholder: "Select an option",
+            placeholder: "Escolha uma Opção",
             maximumSelectionLength: 2
         });
 
         // hiding the search box
         $('#kt_select2_10').select2({
-            placeholder: "Select an option",
+            placeholder: "Escolha uma Opção",
             minimumResultsForSearch: Infinity
         });
 
@@ -143,7 +143,7 @@ var KTSelect2 = function() {
 
         // disabled results
         $('.kt-select2-general').select2({
-            placeholder: "Select an option"
+            placeholder: "Escolha uma Opção"
         });
     }
 
@@ -151,24 +151,24 @@ var KTSelect2 = function() {
         $('#kt_select2_modal').on('shown.bs.modal', function () {
             // basic
             $('#kt_select2_1_modal').select2({
-                placeholder: "Select a state"
+                placeholder: "Escolha uma Opção"
             });
 
             // nested
             $('#kt_select2_2_modal').select2({
-                placeholder: "Select a state"
+                placeholder: "Escolha uma Opção"
             });
 
             // multi select
             $('#kt_select2_3_modal').select2({
-                placeholder: "Select a state",
+                placeholder: "Escolha uma Opção",
             });
 
             // basic
             $('#kt_select2_4_modal').select2({
-                placeholder: "Select a state",
+                placeholder: "Escolha uma Opção",
                 allowClear: true
-            }); 
+            });
         });
     }
 

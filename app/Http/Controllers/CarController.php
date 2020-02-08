@@ -25,9 +25,20 @@ class CarController extends Controller
     {
         $cars = $this->repository->all();
 
+        $brands = $cars;
+
         $route = 'cars.index';
 
-        return view('index', compact('cars', 'route'));
+        $edit = false;
+
+        $links[] = '../../assets/css/pages/wizard/wizard-4.css';
+
+        //$scripts[] = '../../assets/js/pages/custom/user/add-user.js';
+        $scripts[] = '../../js/vehicle.js';
+        $scripts[] = '../../assets/js/pages/crud/forms/widgets/bootstrap-maxlength.js';
+        $scripts[] = '../../assets/js/pages/crud/forms/widgets/select2.js';
+
+        return view('index', compact('cars', 'route', 'links', 'scripts', 'edit', 'brands'));
     }
 
     /**
@@ -35,9 +46,13 @@ class CarController extends Controller
      */
     public function create()
     {
-        $route = 'cars.create';
+        $route = 'cars.form';
 
-        return view('index', compact('route'));
+        $edit = false;
+
+        $scripts[] = '../../js/car.js';
+
+        return view('index', compact('route', 'edit', 'scripts'));
     }
 
     /**
@@ -48,9 +63,13 @@ class CarController extends Controller
     {
         $car = $this->repository->findByField('id', $id)->first();
 
-        $route = 'cars.edit';
+        $route = 'cars.form';
 
-        return view('index', compact( 'route'));
+        $edit = true;
+
+        $scripts[] = '../../js/car.js';
+
+        return view('index', compact( 'route', 'edit', 'scripts'));
     }
 
     /**
@@ -137,5 +156,17 @@ class CarController extends Controller
             return json_encode(['status' => false, 'msg' => $e->getMessage()]);
         }
 
+    }
+
+    public function car_exists($model)
+    {
+        $car = $this->repository->findByField('model', $model)->first();
+
+        if($car)
+        {
+            return json_encode(['status' => false, 'msg' => 'Erro! Este carro já está cadastrado']);
+        }
+
+        return json_encode(['status' => true]);
     }
 }

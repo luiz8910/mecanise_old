@@ -25,7 +25,13 @@
                     <div class="kt-form kt-form--label-right">
                         <div class="kt-form__body">
                             <div class="kt-section kt-section--first">
-                                <div class="kt-section__body">
+                                @if(!$edit)
+                                    <form class="kt-section__body" id="form" action="{{ route('cars.store') }}" method="POST">
+
+                                @else
+                                    <form class="kt-section__body" id="form" action="{{ route('cars.update', ['id' => $car->id]) }}" method="POST">
+                                    @method('PUT')
+                                @endif
                                     <div class="row">
                                         <label class="col-xl-3"></label>
                                         <div class="col-lg-9 col-xl-6">
@@ -39,7 +45,7 @@
                                             <div class="input-group kt-section__content kt-section__content--solid--" id="input-model">
 
                                                 <div id="spinner_model">
-                                                    <input class="form-control tab-info" id="model" type="text" value="@if($edit) {{ $car->model }} @endif"
+                                                    <input class="form-control tab-info" id="model" type="text" value="@if($edit){{ $car->model }}@endif"
                                                        placeholder="Digite o Modelo do Carro" required name="model">
                                                     <div class="valid-feedback" id="span-valid-model" style="display:none;">Ótimo! Este carro ainda não existe na base de dados</div>
                                                     <div class="invalid-feedback" id="span-invalid-model" style="display:none;"></div>
@@ -49,30 +55,54 @@
                                         </div>
                                     </div>
 
+                                        @if($edit)
+                                            <input type="hidden" id="car_id" value="{{ $car->id }}">
+                                        @endif
 
 
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Marca / Montadora</label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group" id="input-brand">
-                                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
-                                                <input type="text" id="brand" class="form-control tab-info" value="@if($edit) {{ $car->brand }}  @endif"
-                                                       required placeholder="(15) 99999-9999"  aria-describedby="basic-addon1" name="brand">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="la la-car"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" id="brand" class="form-control tab-info" value="@if($edit){{ $car->brand }}@endif"
+                                                       required placeholder="Digite a marca, Ex: Fiat, Chevrolet"  aria-describedby="basic-addon1" name="brand">
                                             </div>
                                             <span class="form-text text-danger" id="span_brand_status" style="display:none;">Insira uma montadora válida.</span>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Ano Fabricação</label>
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Ano Inicial de Fabricação</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <div class="input-group" id="input-real-email">
-                                                <span class="input-group-text"><i class="la la-at"></i></span>
+                                            <div class="input-group" id="input-year">
+                                                <span class="input-group-text">
+                                                    <i class="la la-calendar"></i>
+                                                </span>
 
-                                                <input type="text" id="real-year" name="year" value="@if($edit) {{ $car->year }} @endif" class="form-control tab-info number"
-                                                       placeholder="Digite o email do usuário" aria-describedby="basic-addon1">
+                                                <input type="text" id="start_year" name="start_year" value="@if($edit){{ $car->start_year }}@endif" class="form-control tab-info number"
+                                                       placeholder="Digite o ano de fabricação com quatro digítos" minlength="4" maxlength="4" aria-describedby="basic-addon1" required>
                                             </div>
-                                            <span class="form-text text-danger" id="span_year_status" style="display: none;">Insira um ano válido</span>
+                                            <span class="form-text text-danger" id="span_start_year_status" style="display: none;">Insira um ano válido</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Ano Final de Fabricação</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group" id="input-year">
+                                            <span class="input-group-text">
+                                                <i class="la la-calendar"></i>
+                                            </span>
+
+                                                <input type="text" id="end_year" name="end_year" value="@if($edit){{ $car->end_year }}@endif" class="form-control tab-info number"
+                                                       placeholder="Digite o ano de fabricação com quatro digítos" minlength="4" maxlength="4" aria-describedby="basic-addon1" required>
+                                            </div>
+                                            <span class="form-text text-danger" id="span_end_year_status" style="display: none;">Insira um ano válido</span>
                                         </div>
                                     </div>
 
@@ -80,13 +110,41 @@
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Versão</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <div class="input-group" id="input-real-email">
-                                                <span class="input-group-text"><i class="la la-at"></i></span>
+                                            <div class="input-group" id="input-version">
+                                                <span class="input-group-text">
+                                                    <i class="la la-car"></i>
+                                                </span>
 
-                                                <input type="text" id="version" name="version" value="@if($edit) {{ $car->version }} @endif" class="form-control tab-info"
-                                                       placeholder="Digite o email do usuário" aria-describedby="basic-addon1">
+                                                <input type="text" id="version" name="version" value="@if($edit){{ $car->version }}@endif" class="form-control tab-info"
+                                                       placeholder="Por Ex: Fire Economy, GLS 16v, Turbo LTZ" aria-describedby="basic-addon1" required>
                                             </div>
                                             <span class="form-text text-danger" id="span_version_status" style="display: none;">Insira uma versão válida</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Combustível</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <select class="form-control tab-info select-input" id="fuel" name="fuel" required>
+
+                                                @if($edit)
+                                                    <option value="">Selecione...</option>
+                                                    <option value="Flex" @if($car->fuel == "Flex") selected @endif>Flex</option>
+                                                    <option value="Gasolina" @if($car->fuel == "Gasolina") selected @endif>Gasolina</option>
+                                                    <option value="Álcool" @if($car->fuel == "Álcool") selected @endif>Álcool</option>
+                                                    <option value="GNV" @if($car->fuel == "GNV") selected @endif>GNV</option>
+                                                    <option value="Diesel" @if($car->fuel == "Diesel") selected @endif>Diesel</option>
+
+                                                @else
+                                                    <option value="" selected>Selecione...</option>
+                                                    <option value="Flex">Flex</option>
+                                                    <option value="Gasolina">Gasolina</option>
+                                                    <option value="Álcool">Álcool</option>
+                                                    <option value="GNV">GNV</option>
+                                                    <option value="Diesel">Diesel</option>
+                                                @endif
+                                            </select>
+                                            <span class="form-text text-danger" id="span_fuel_status" style="display: none;">Selecione uma opção</span>
                                         </div>
                                     </div>
 
@@ -102,12 +160,14 @@
                                         </div>
 
                                         <div class="col-lg-5 col-xl-5">
-                                            <button class="btn btn-default next-tab" onclick="next_tab(2, 'tab-info')" disabled>
+                                            <button class="btn btn-default next-tab" onclick="next_tab(0, 'tab-info')" disabled>
                                                 <i class="la la-arrow-right"></i>
                                                 Próximo
                                             </button>
                                         </div>
                                     </div>
+
+                                </form>
 
                                 </div>
 

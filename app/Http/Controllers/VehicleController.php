@@ -64,7 +64,7 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        $cars = $this->carRepository->all();
+        $cars = $brands = $this->carRepository->all();
 
         $route = 'vehicles.form';
 
@@ -77,7 +77,7 @@ class VehicleController extends Controller
         $scripts[] = '../../assets/js/pages/crud/forms/widgets/bootstrap-maxlength.js';
         $scripts[] = '../../assets/js/pages/crud/forms/widgets/select2.js';
 
-        return view('index', compact('cars', 'route', 'links', 'scripts', 'edit'));
+        return view('index', compact('cars', 'route', 'links', 'scripts', 'edit', 'brands'));
     }
 
     /**
@@ -86,7 +86,7 @@ class VehicleController extends Controller
      */
     public function edit($id)
     {
-        $cars = $this->carRepository->all();
+        $cars = $brands = $this->carRepository->all();
 
         $route = 'vehicles.form';
 
@@ -103,7 +103,7 @@ class VehicleController extends Controller
 
         if($vehicle)
         {
-            return view('index', compact('cars', 'route', 'edit', 'links', 'scripts', 'vehicle'));
+            return view('index', compact('cars', 'route', 'edit', 'links', 'scripts', 'vehicle', 'brands'));
         }
 
         abort(404);

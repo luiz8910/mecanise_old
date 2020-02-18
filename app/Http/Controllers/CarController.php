@@ -23,9 +23,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = $this->repository->all();
-
-        $brands = $cars;
+        $cars = $brands = $this->repository->all();
 
         $route = 'cars.index';
 
@@ -34,9 +32,17 @@ class CarController extends Controller
         $links[] = '../../assets/css/pages/wizard/wizard-4.css';
 
         //$scripts[] = '../../assets/js/pages/custom/user/add-user.js';
-        $scripts[] = '../../js/vehicle.js';
         $scripts[] = '../../assets/js/pages/crud/forms/widgets/bootstrap-maxlength.js';
         $scripts[] = '../../assets/js/pages/crud/forms/widgets/select2.js';
+        $scripts[] = '../../js/data-car.js';
+        $scripts[] = '../../js/car.js';
+
+
+        $file = fopen("json/cars.json","w");
+
+        fwrite($file, json_encode($cars));
+
+        fclose($file);
 
         return view('index', compact('cars', 'route', 'links', 'scripts', 'edit', 'brands'));
     }
@@ -69,7 +75,12 @@ class CarController extends Controller
 
         $scripts[] = '../../js/car.js';
 
-        return view('index', compact( 'route', 'edit', 'scripts'));
+        if($car)
+        {
+            return view('index', compact( 'route', 'edit', 'scripts', 'car'));
+        }
+
+        abort(404);
     }
 
     /**
@@ -83,6 +94,10 @@ class CarController extends Controller
         DB::beginTransaction();
 
         try{
+
+            $data['model'] = strtoupper($data['model']);
+            $data['brand'] = strtoupper($data['brand']);
+            $data['version'] = strtoupper($data['version']);
 
             $this->repository->create($data);
 
@@ -115,13 +130,17 @@ class CarController extends Controller
 
         try{
 
+            $data['model'] = strtoupper($data['model']);
+            $data['brand'] = strtoupper($data['brand']);
+            $data['version'] = strtoupper($data['version']);
+
             $this->repository->update($data, $id);
 
             DB::commit();
 
             $request->session()->flash('success.msg', 'O carro foi alterado com sucesso');
 
-            return redirect()->route('car.index');
+            return redirect()->route('cars.index');
 
         }catch (\Exception $e){
 
@@ -158,15 +177,26 @@ class CarController extends Controller
 
     }
 
-    public function car_exists($model)
+    public function car_exists($model, $id = null)
     {
-        $car = $this->repository->findByField('model', $model)->first();
+
+        $car = $this->repository->findByField('model', strtoupper($model))->first();
 
         if($car)
         {
+            if($id)
+            {
+                if($car->id == $id)
+                {
+                    return json_encode(['status' => true, 'id' => true]);
+                }
+            }
+
             return json_encode(['status' => false, 'msg' => 'Erro! Este carro já está cadastrado']);
         }
 
         return json_encode(['status' => true]);
+
+
     }
 }

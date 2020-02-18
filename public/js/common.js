@@ -23,14 +23,39 @@ $(function () {
 
 });
 
-function swal(data)
+function sweet_alert($data, $ajax)
 {
-    swal.fire({
-        title: data.title,
-        text: data.text,
-        type: data.type,
-        confirmButtonClass: data.confirmButtonClass
-    })
+    swal({
+        title: $data.title,
+        text: $data.text,
+        icon: $data.icon,
+        buttons: {
+            cancel: {
+                text: $data.cancel ? $data.cancel : "Cancelar",
+                value: null,
+                visible: true,
+                closeModal: true,
+            },
+            confirm: {
+                text: $data.button ? $data.button : "OK",
+                value: true,
+                visible: true,
+                closeModal: true
+            }
+        }
+
+    }).then((value) => {
+        if(value)
+        {
+            //TODO configure $ajax here
+            swal($data.success_msg, {
+                icon: 'success',
+                timer: 3000
+            });
+        }
+    });
+
+
 }
 
 

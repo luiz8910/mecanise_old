@@ -131,10 +131,20 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::get('/novo-carro', 'CarController@create')->name('cars.create');
 
-    Route::get('/car_exists/{model}', 'CarController@car_exists');
+    Route::get('/editar_carro/{id}', 'CarController@edit')->name('cars.update');
+
+    Route::post('/novo-carro', 'CarController@store')->name('cars.store');
+
+    Route::put('/editar_carro/{id}', 'CarController@update')->name('cars.update');
+
+    Route::delete('carro/{id}', 'CarController@delete');
+
+    Route::get('/car_exists/{model}/{id?}', 'CarController@car_exists');
 
 });
 
 Auth::routes();
 
+
+//Testes
 

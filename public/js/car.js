@@ -1,6 +1,7 @@
 $(function () {
 
     $("#model").change(function () {
+
         var spinner = $("#spinner_model");
         var model = $("#model");
         var span_valid = $("#span-valid-model");
@@ -14,8 +15,15 @@ $(function () {
         {
             spinner.addClass("kt-spinner kt-spinner--sm kt-spinner--success kt-spinner--right kt-spinner--input");
 
+            var id = null;
+
+            if (location.pathname.search('editar') != -1)
+            {
+                id = $("#car_id").val();
+            }
+
             var request = $.ajax({
-                url: '/car_exists/' + model.val(),
+                url: '/car_exists/' + model.val() + '/' + id,
                 method: 'GET',
                 dataType: 'json'
             });
@@ -25,7 +33,11 @@ $(function () {
                 {
                     model.addClass('is-valid');
                     spinner.removeClass("kt-spinner kt-spinner--sm kt-spinner--success kt-spinner--right kt-spinner--input");
-                    span_valid.css('display', 'block');
+
+                    if(!e.id)
+                    {
+                        span_valid.css('display', 'block');
+                    }
                 }
                 else{
                     model.addClass('is-invalid');
@@ -45,4 +57,92 @@ $(function () {
         }
 
     });
+
+    $("#start_year").keyup(function (e) {
+
+        var end = $("#end_year").val();
+        var start = $(this).val();
+
+        if(start.length == 4)
+        {
+            var today = new Date();
+
+            if((today.getFullYear() - start) < 0)
+            {
+                $("#span_start_year_status").css('display', 'block').text('Insira um valor menor que o ano atual');
+            }
+            else{
+                $("#span_start_year_status").css('display', 'none').text('Insira um ano válido');
+
+                if(end !== "" && end < start)
+                {
+                    $("#span_end_year_status").css('display', 'block').text('Insira um ano final de fabricação maior que o ano de início');
+                }
+            }
+        }
+        else{
+
+            $("#span_start_year_status").css('display', 'block').text('Insira mais ' + (4 - ($(this).val().length)) + ' caracteres');
+        }
+    });
+
+    $("#end_year").keyup(function (e) {
+
+        var end = $(this).val();
+        var start = $("#start_year").val();
+
+
+        if(end.length == 4)
+        {
+            var today = new Date();
+
+            if((today.getFullYear() - end) < 0)
+            {
+                $("#span_end_year_status").css('display', 'block').text('Insira um valor menor que o ano atual');
+            }
+            else{
+                $("#span_end_year_status").css('display', 'none').text('Insira um ano válido');
+
+                if(start !== "" && end < start)
+                {
+                    $("#span_end_year_status").css('display', 'block').text('Insira um ano final de fabricação maior que o ano de início');
+                }
+            }
+        }
+        else{
+
+            $("#span_end_year_status").css('display', 'block').text('Insira mais ' + (4 - ($(this).val().length)) + ' caracteres');
+        }
+    });
+
+
+
 });
+
+function delete_car($id)
+{
+
+    var data = {
+        title: 'Atenção',
+        text: 'Deseja excluir este carro?',
+        icon: 'warning',
+        button: 'Excluir',
+        success_msg: 'O Carro foi excluído'
+    }
+
+    sweet_alert(data);
+
+}
+
+ $(document).on('click', 'button', function () {
+
+     var id = $(this)[0].id.replace('car_', '');
+
+     if(parseInt(id) > 0)
+     {
+         delete_car(id);
+     }
+
+
+ });
+

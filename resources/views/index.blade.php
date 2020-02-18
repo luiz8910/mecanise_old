@@ -4451,7 +4451,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="../../assets/plugins/general/waypoints/lib/jquery.waypoints.js" type="text/javascript"></script>
 <script src="../../assets/plugins/general/counterup/jquery.counterup.js" type="text/javascript"></script>
 <script src="../../assets/plugins/general/es6-promise-polyfill/promise.min.js" type="text/javascript"></script>
-<script src="../../assets/plugins/general/sweetalert2/dist/sweetalert2.min.js" type="text/javascript"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="../../assets/plugins/general/js/global/integration/plugins/sweetalert2.init.js" type="text/javascript"></script>
 <script src="../../assets/plugins/general/jquery.repeater/src/lib.js" type="text/javascript"></script>
 <script src="../../assets/plugins/general/jquery.repeater/src/jquery.input.js" type="text/javascript"></script>

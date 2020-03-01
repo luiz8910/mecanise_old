@@ -47,15 +47,56 @@ function sweet_alert($data, $ajax)
     }).then((value) => {
         if(value)
         {
-            //TODO configure $ajax here
-            swal($data.success_msg, {
-                icon: 'success',
-                timer: 3000
+            var request = $.ajax({
+                url: $ajax.url,
+                method: $ajax.method ? $ajax.method : 'GET',
+                dataType: 'json'
             });
+
+            request.done(function (e) {
+                if(e.status)
+                {
+
+                    swal($data.success_msg, {
+                        icon: 'success',
+                        timer: 3000
+                    });
+
+                    setTimeout(function () {
+                        location.reload();
+                    }, 3000);
+                }
+                else{
+                    sweet_alert_error();
+
+                    return false;
+                }
+            });
+
+            request.fail(function (e) {
+                console.log('fail');
+                console.log(e);
+                sweet_alert_error();
+
+                return false;
+            })
+
         }
+
+        return false;
     });
 
 
+}
+
+function sweet_alert_error($msg)
+{
+    var msg = $msg ? $msg : 'Um erro ocorreu, tente novamente mais tarde';
+
+    swal(msg, {
+        icon: 'error',
+        timer: 3000
+    });
 }
 
 
@@ -112,3 +153,26 @@ function next_tab($tab, $class)
         }
     }
 }
+
+$(document).on('click', 'button', function () {
+
+    var id = $(this)[0].id.replace('model_id_', '');
+
+    if(id && parseInt(id) > 0)
+    {
+        var location = window.location.pathname;
+
+        switch (location)
+        {
+            case '/carros':
+
+                delete_car(id);
+                break;
+
+            default:
+                sweet_alert_error();
+        }
+
+    }
+
+});

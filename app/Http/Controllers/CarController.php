@@ -37,6 +37,14 @@ class CarController extends Controller
         $scripts[] = '../../js/data-car.js';
         $scripts[] = '../../js/car.js';
 
+        $i = 1;
+
+        foreach ($cars as $car)
+        {
+            $car->row = $i;
+
+            $i++;
+        }
 
         $file = fopen("json/cars.json","w");
 

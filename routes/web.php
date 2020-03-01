@@ -137,7 +137,7 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::put('/editar_carro/{id}', 'CarController@update')->name('cars.update');
 
-    Route::delete('carro/{id}', 'CarController@delete');
+    Route::delete('/carro/{id}', 'CarController@delete');
 
     Route::get('/car_exists/{model}/{id?}', 'CarController@car_exists');
 

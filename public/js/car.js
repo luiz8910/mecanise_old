@@ -130,19 +130,14 @@ function delete_car($id)
         success_msg: 'O Carro foi excluído'
     }
 
-    sweet_alert(data);
+    var ajax = {
+        url: '/carro/' + $id,
+        method: 'DELETE',
+    };
+
+    return sweet_alert(data, ajax);
 
 }
 
- $(document).on('click', 'button', function () {
 
-     var id = $(this)[0].id.replace('car_', '');
-
-     if(parseInt(id) > 0)
-     {
-         delete_car(id);
-     }
-
-
- });
 

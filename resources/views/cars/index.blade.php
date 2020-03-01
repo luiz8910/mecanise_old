@@ -8,8 +8,8 @@
                     <i class="kt-font-brand la la-automobile"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
-                    Veículos
-                    <small>Todos os veículos, mais novos primeiro</small>
+                    Base de dados: Carros
+                    <small>Todos os carros, por ordem alfabética</small>
                 </h3>
             </div>
             <div class="kt-portlet__head-toolbar">

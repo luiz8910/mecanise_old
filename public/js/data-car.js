@@ -17,12 +17,12 @@ var KTDatatableJsonRemoteDemo = function () {
 
             // layout definition
             layout: {
-                scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
+                scroll: true, // enable/disable datatable scroll both horizontal and vertical when needed.
                 footer: false // display/hide footer
             },
 
             // column sorting
-            sortable: true,
+            sortable: false,
 
             pagination: true,
 
@@ -69,7 +69,7 @@ var KTDatatableJsonRemoteDemo = function () {
                             </a>\
 						  	<div class="dropdown-menu dropdown-menu-right">\
 						    	<a class="dropdown-item" href="/editar_carro/'+row.id+'"><i class="la la-edit"></i> Editar</a>\
-						    	<button class="dropdown-item" id="car_'+row.id+'"><i class="la la-trash"></i> Excluir</button>\
+						    	<button class="dropdown-item" data-row="'+row.row+'" id="model_id_'+row.id+'"><i class="la la-trash"></i> Excluir</button>\
 						  	</div>\
 						</div>\
 					';

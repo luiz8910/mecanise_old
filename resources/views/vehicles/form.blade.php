@@ -69,37 +69,57 @@
 
                                     <div class="form-group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">Modelo</label>
-                                        <div class=" col-lg-4 col-md-9 col-sm-12">
-                                            <select class="form-control kt-select2" id="kt_select2_2" name="param">
+                                        <div class="col-lg-9 col-xl-6">
+                                            <select class="form-control kt-select2 car_id" id="kt_select2_2" name="car_id" required>
                                                 <option value="" selected></option>
-                                                @foreach($brands as $item)
-                                                    <optgroup label="{{ $item->brand }}">
-                                                        @foreach($cars as $car)
-                                                            @if($car->brand == $item->brand)
-                                                                <option value="{{ $item->id }}">{{ $item->model }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </optgroup>
-
+                                                @foreach($brands as $b)
+                                                    <optgroup label="{{ $b->brand }}"></optgroup>
+                                                    @foreach($cars as $car)
+                                                        @if($car->brand == $b->brand)
+                                                            <option value="{{ $car->id }}">{{ $car->model }}</option>
+                                                        @endif
+                                                    @endforeach
                                                 @endforeach
 
                                             </select>
                                         </div>
                                     </div>
 
-                                    {{--<div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Modelo</label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <div class="input-group" id="input-name">
-                                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-user"></i></span></div>
-                                                <input class="form-control tab-info" id="name" type="text" value="@if($edit) {{ $person->name }} @endif" placeholder="Digite o nome do usuário" required>
-                                            </div>
-                                            <span class="form-text text-danger" id="span_name_status" style="display:none;">Insira o nome do usuário.</span>
 
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Montadora</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group" id="input-brand">
+                                                <span class="input-group-text"><i class="la la-truck"></i></span>
+
+                                                <input type="text" id="brand" name="brand" class="form-control tab-info" placeholder="Selecione um modelo acima" aria-describedby="basic-addon1" readonly>
+                                            </div>
+                                            <span class="form-text text-danger" id="span_brand_status" style="display: none;">Insira um valor válido</span>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Versão</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group" id="input-version">
+                                                <span class="input-group-text"><i class="la la-tachometer"></i></span>
+
+                                                <input type="text" id="version" name="version" class="form-control tab-info" placeholder="Selecione um modelo acima" aria-describedby="basic-addon1" readonly>
+                                            </div>
+                                            <span class="form-text text-danger" id="span_version_status" style="display: none;">Insira um valor válido</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-3 col-sm-12">Ano Fabricação</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <select class="form-control kt-select2" id="year" name="year">
+                                                <option value="" selected>Selecione um modelo acima</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    {{--<div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Telefone</label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group" id="input-cel">
@@ -110,6 +130,7 @@
                                             <span class="form-text text-danger" id="span_cel_status" style="display:none;">Insira um número de telefone válido.</span>
                                         </div>
                                     </div>
+
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Email</label>
                                         <div class="col-lg-9 col-xl-6">
@@ -120,45 +141,9 @@
                                             </div>
                                             <span class="form-text text-danger" id="span_email_status" style="display: none;">Insira um email válido</span>
                                         </div>
-                                    </div>
-
-                                    <!-- Campo para enganar o Chrome Autocomplete -->
-                                    <div class="form-group row" id="email-hidden">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Email</label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>
-
-                                                <input type="email" id="email" class="form-control">
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Cargo</label>
-                                        <div class="col-lg-9 col-xl-6">
-                                            <select class="form-control tab-info select-input" id="role_id" name="role_id" required>
-
-                                                @if($edit)
-                                                    <option value="">Selecione...</option>
-                                                    @foreach($roles as $item)
-                                                        <option value="{{ $item->id }}" @if($item->id == $person->role_id) selected @endif>
-                                                            {{ $item->name }}
-                                                        </option>
-                                                    @endforeach
-                                                @else
-                                                    <option value="" selected>Selecione...</option>
-                                                    @foreach($roles as $item)
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->name }}
-                                                        </option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                            <span class="form-text text-danger" id="span_role_id_status" style="display: none;">Selecione uma opção</span>
-                                        </div>
                                     </div>--}}
+
+
 
                                     <div class="kt-separator kt-separator--border-dashed kt-separator--portlet-fit kt-separator--space-lg"></div>
 

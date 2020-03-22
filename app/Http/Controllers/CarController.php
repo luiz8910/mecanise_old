@@ -23,8 +23,11 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = $brands = $this->repository->all();
 
+        $cars = $this->repository->all();
+
+
+        //dd($cars);
         $route = 'cars.index';
 
         $edit = false;
@@ -52,7 +55,7 @@ class CarController extends Controller
 
         fclose($file);
 
-        return view('index', compact('cars', 'route', 'links', 'scripts', 'edit', 'brands'));
+        return view('index', compact('cars', 'route', 'links', 'scripts', 'edit'));
     }
 
     /**
@@ -113,7 +116,7 @@ class CarController extends Controller
 
             $request->session()->flash('success.msg', 'O carro foi cadastrado com sucesso');
 
-            return redirect()->route('car.index');
+            return redirect()->route('cars.create');
 
         }catch (\Exception $e){
 
@@ -206,5 +209,18 @@ class CarController extends Controller
         return json_encode(['status' => true]);
 
 
+    }
+
+    //Function called in vehicle.js
+    public function car_details($id)
+    {
+        $car = $this->repository->findByField('id', $id)->first();
+
+        if($car)
+        {
+            return json_encode(['status' => true, 'car' => $car]);
+        }
+
+        return json_encode(['status' => false, 'msg' => 'Este modelo não foi encontrado']);
     }
 }

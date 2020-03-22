@@ -3441,8 +3441,12 @@ License: You must have a valid license purchased only from themeforest(the above
                                     </div>
                                 </a>
                                 <div class="kt-notification__custom kt-space-between">
-                                    <a href="custom/user/login-v2.html" target="_blank"
-                                       class="btn btn-label btn-label-brand btn-sm btn-bold">Sign Out</a>
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        <button type="submit" class="btn btn-label btn-label-brand btn-sm btn-bold">
+                                            Sair
+                                        </button>
+                                    </form>
+
                                     <a href="custom/user/login-v2.html" target="_blank"
                                        class="btn btn-clean btn-sm btn-bold">Upgrade Plan</a>
                                 </div>
@@ -3461,6 +3465,9 @@ License: You must have a valid license purchased only from themeforest(the above
             <!-- end:: Header -->
 
             <!-- begin:: Content -->
+
+        @include('includes.messages')
+
         @include($route)
         <!-- end:: Content -->
 

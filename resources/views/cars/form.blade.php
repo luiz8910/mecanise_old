@@ -100,7 +100,7 @@
                                             </span>
 
                                                 <input type="text" id="end_year" name="end_year" value="@if($edit){{ $car->end_year }}@endif" class="form-control tab-info number"
-                                                       placeholder="Digite o ano de fabricação com quatro digítos" minlength="4" maxlength="4" aria-describedby="basic-addon1" required>
+                                                       placeholder="Digite o ano de fabricação com quatro digítos" minlength="4" maxlength="4" aria-describedby="basic-addon1">
                                             </div>
                                             <span class="form-text text-danger" id="span_end_year_status" style="display: none;">Insira um ano válido</span>
                                         </div>

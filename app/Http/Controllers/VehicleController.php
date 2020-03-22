@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Repositories\CarRepository;
 use App\Repositories\PersonRepository;
 use App\Repositories\VehicleRepository;
+use App\Repositories\WorkshopRepository;
 use App\Traits\Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Psr\Container\NotFoundExceptionInterface;
 
 class VehicleController extends Controller
@@ -20,13 +22,19 @@ class VehicleController extends Controller
      * @var CarRepository
      */
     private $carRepository;
+    /**
+     * @var WorkshopRepository
+     */
+    private $workshopRepository;
 
-    public function __construct(VehicleRepository $repository, PersonRepository $personRepository, CarRepository $carRepository)
+    public function __construct(VehicleRepository $repository, PersonRepository $personRepository,
+                                CarRepository $carRepository, WorkshopRepository $workshopRepository)
     {
 
         $this->repository = $repository;
         $this->personRepository = $personRepository;
         $this->carRepository = $carRepository;
+        $this->workshopRepository = $workshopRepository;
     }
 
     /**
@@ -37,11 +45,31 @@ class VehicleController extends Controller
     {
         $vehicles = $this->repository->findByField('workshop_id', $this->get_user_workshop());
 
-        $scripts[] = '../../assets/js/pages/crud/metronic-datatable/base/data-json.js';
+        $workshop = $this->workshopRepository->findByField('id', $this->get_user_workshop())->first();
 
-        $route = 'vehicles.index';
+        if($workshop)
+        {
+            $scripts[] = '../../js/data-vehicle.js';
 
-        return view('index', compact('vehicles', 'route', 'scripts'));
+            $route = 'vehicles.index';
+
+            if (!file_exists("json/".$workshop->name))
+            {
+                mkdir('json/'.$workshop->name);
+            }
+
+            $file = fopen("json/".$workshop->name."/vehicles.json","w");
+
+            fwrite($file, json_encode($vehicles));
+
+            fclose($file);
+
+            $file_location = '../../json'.$workshop->name.'/vehicles.json';
+
+            return view('index', compact('vehicles', 'route', 'scripts', 'file_location'));
+        }
+
+
     }
 
     /**
@@ -64,7 +92,14 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        $cars = $brands = $this->carRepository->all();
+        $cars =  $this->carRepository->all();
+
+        $brands = DB::table('cars')
+                        ->whereNull('deleted_at')
+                        ->select('brand')
+                        ->distinct()
+                        ->get();
+
 
         $route = 'vehicles.form';
 

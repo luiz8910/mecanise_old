@@ -22,9 +22,10 @@ var KTDatatableJsonRemoteDemo = function () {
             },
 
             // column sorting
-            sortable: false,
-
+            sortable: true,
             pagination: true,
+            serverFiltering: true,
+            serverSorting: true,
 
             search: {
                 input: $('#generalSearch')
@@ -44,12 +45,15 @@ var KTDatatableJsonRemoteDemo = function () {
                     field: 'model',
                     title: 'Modelo',
 
+
                 }, {
                     field: 'brand',
                     title: 'Montadora',
+
                 }, {
                     field: 'start_year',
                     title: 'Ano Início',
+
                 }, {
                     field: 'end_year',
                     title: 'Ano Final',
@@ -57,7 +61,7 @@ var KTDatatableJsonRemoteDemo = function () {
                 }, {
                     field: 'Actions',
                     title: 'Opções',
-                    sortable: false,
+                    sortable: true,
                     width: 110,
                     autoHide: false,
                     overflow: 'visible',

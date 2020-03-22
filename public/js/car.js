@@ -115,8 +115,6 @@ $(function () {
         }
     });
 
-
-
 });
 
 function delete_car($id)

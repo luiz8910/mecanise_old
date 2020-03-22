@@ -63,22 +63,7 @@
 															</span>
                                 </div>
                             </div>
-                            <div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-                                <div class="kt-form__group kt-form__group--inline">
-                                    <div class="kt-form__label">
-                                        <label>Filtro:</label>
-                                    </div>
-                                    <div class="kt-form__control">
-                                        <select class="form-control bootstrap-select" id="kt_form_status">
-                                            <option value="">Todos</option>
-                                            <option value="1">Por Montadora</option>
-                                            <option value="2">Por Modelo</option>
-                                            <option value="3">Por Proprietário</option>
-                                            <option value="4">Por Serviço executado</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="col-md-4 kt-margin-b-20-tablet-and-mobile" style="display:none;">
                                 <div class="kt-form__group kt-form__group--inline">
                                     <div class="kt-form__label">

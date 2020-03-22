@@ -118,11 +118,11 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::get('/editar_checklist/{id}', 'ChecklistController@edit')->name('checklist.edit');
 
-    Route::post('/checklist', 'ChecklistsController@store')->name('checklist.store');
+    Route::post('/checklist', 'ChecklistController@store')->name('checklist.store');
 
     Route::put('/checklist/{id}', 'ChecklistController@update')->name('checklist.update');
 
-    Route::delete('/checklist/{id}', 'ChecklistsController@delete')->name('checklist.delete');
+    Route::delete('/checklist/{id}', 'ChecklistController@delete')->name('checklist.delete');
 
     /**
      * Cars
@@ -141,6 +141,8 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::get('/car_exists/{model}/{id?}', 'CarController@car_exists');
 
+    Route::get('/car_details/{id}', 'CarController@car_details');
+
 });
 
 Auth::routes();
@@ -148,3 +150,4 @@ Auth::routes();
 
 //Testes
 
+Route::get('get_session', 'TesteController@get_session');

@@ -50,6 +50,8 @@
         </div>
         <div class="kt-portlet__body">
 
+            <input type="hidden" id="file_location" value="{{ $file_location }}">
+
             <!--begin: Search Form -->
             <div class="kt-form kt-form--label-right kt-margin-t-20 kt-margin-b-10">
                 <div class="row align-items-center">

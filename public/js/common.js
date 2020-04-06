@@ -21,6 +21,12 @@ $(function () {
         $(".text-danger").css('display', 'none');
     });
 
+    $("input[type=number]").keydown(function (e) {
+
+        if(e.which === 69)
+            return false;
+    });
+
 });
 
 function sweet_alert($data, $ajax)
@@ -99,6 +105,15 @@ function sweet_alert_error($msg)
     });
 }
 
+function sweet_alert_success($msg)
+{
+    var msg = $msg ? $msg : 'Sucesso';
+
+    swal(msg, {
+        icon: 'success',
+        timer: 3000
+    });
+}
 
 function clean_fields($class)
 {
@@ -132,7 +147,12 @@ function next_tab($tab, $class)
                 var id = fields[i].id;
 
                 $("#input-"+id).addClass('border-red');
+
                 $("#span_"+id+"_status").css('display', 'block');
+
+                $('html, body').animate({
+                    scrollTop: $("."+$class+"-title").offset().top
+                }, 1000);
 
                 errors++;
             }
@@ -152,6 +172,35 @@ function next_tab($tab, $class)
 
         }
     }
+}
+
+/*
+ Add or remove spinner function to element $id or $class
+ */
+function spinner_input($function, $id, $class)
+{
+    if($function)
+    {
+        if($id)
+        {
+            $("#"+$id).addClass("kt-spinner kt-spinner--sm kt-spinner--success kt-spinner--right kt-spinner--input");
+        }
+        else if($class)
+        {
+            $("."+$class).addClass("kt-spinner kt-spinner--sm kt-spinner--success kt-spinner--right kt-spinner--input");
+        }
+    }
+    else{
+        if($id)
+        {
+            $("#"+$id).removeClass("kt-spinner kt-spinner--sm kt-spinner--success kt-spinner--right kt-spinner--input");
+        }
+        else if($class)
+        {
+            $("."+$class).removeClass("kt-spinner kt-spinner--sm kt-spinner--success kt-spinner--right kt-spinner--input");
+        }
+    }
+
 }
 
 $(document).on('click', 'button', function () {

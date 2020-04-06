@@ -2,7 +2,6 @@ $(function () {
 
     $("#model").change(function () {
 
-        var spinner = $("#spinner_model");
         var model = $("#model");
         var span_valid = $("#span-valid-model");
         var span_invalid = $("#span-invalid-model");
@@ -13,14 +12,13 @@ $(function () {
 
         if(model.val() !== "")
         {
-            spinner.addClass("kt-spinner kt-spinner--sm kt-spinner--success kt-spinner--right kt-spinner--input");
+            spinner_input(1, 'spinner_model');
 
             var id = null;
 
             if (location.pathname.search('editar') != -1)
-            {
                 id = $("#car_id").val();
-            }
+
 
             var request = $.ajax({
                 url: '/car_exists/' + model.val() + '/' + id,
@@ -32,16 +30,15 @@ $(function () {
                 if(e.status)
                 {
                     model.addClass('is-valid');
-                    spinner.removeClass("kt-spinner kt-spinner--sm kt-spinner--success kt-spinner--right kt-spinner--input");
+                    spinner_input(0, 'spinner_model');
 
                     if(!e.id)
-                    {
                         span_valid.css('display', 'block');
-                    }
+
                 }
                 else{
                     model.addClass('is-invalid');
-                    spinner.removeClass("kt-spinner kt-spinner--sm kt-spinner--success kt-spinner--right kt-spinner--input");
+                    spinner_input(0, 'spinner_model');
                     span_invalid.css('display', 'block').text(e.msg);
                 }
 
@@ -51,7 +48,7 @@ $(function () {
                 console.log('fail');
                 console.log(e);
 
-                spinner.removeClass("kt-spinner kt-spinner--sm kt-spinner--success kt-spinner--right kt-spinner--input");
+                spinner_input(0, 'spinner_model');
                 span_invalid.css('display', 'block').text('Um erro ocorreu, tente novamente mais tarde');
             })
         }

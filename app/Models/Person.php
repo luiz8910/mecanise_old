@@ -23,7 +23,8 @@ class Person extends Model implements Transformable
      */
     protected $fillable = [
         'name', 'email', 'cpf', 'dateBirth', 'cel', 'cel2', 'gender', 'description', 'workshop_id',
-        'zip_code', 'street', 'number', 'district', 'city', 'state', 'address_reference', 'img_profile'
+        'zip_code', 'street', 'number', 'district', 'city', 'state',
+        'address_reference', 'img_profile', 'cpf', 'role_id'
     ];
 
     protected $dates = ['deleted_at'];

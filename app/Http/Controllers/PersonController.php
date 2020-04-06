@@ -188,10 +188,9 @@ class PersonController extends Controller
 
         try{
 
-            if($data['dateBirth'])
-            {
+            if(isset($data['dateBirth']))
                 $data['dateBirth'] = date_format(date_create($data['dateBirth']), 'Y-m-d');
-            }
+
 
             $person_id = $this->repository->create($data)->id;
 
@@ -207,15 +206,13 @@ class PersonController extends Controller
 
             $request->session()->flash('success.msg', 'O usuário foi cadastrado com sucesso');
 
-            return 'ok';
-
-            //TODO: return view
+            return isset($data['origin']) ? json_encode(['status' => true, 'id' => $person_id]) : redirect()->route('person.index');
 
         }catch (\Exception $e)
         {
             DB::rollBack();
 
-            return $e->getMessage();
+            return isset($data['origin']) ? json_encode(['status' => false, 'msg' => $e->getMessage()]) : redirect()->route('person.index');
         }
     }
 

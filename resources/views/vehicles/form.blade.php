@@ -4,7 +4,7 @@
             <div class="kt-portlet__head-toolbar">
                 <ul class="nav nav-tabs nav-tabs-space-xl nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-brand" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#kt_user_edit_tab_1" id="user_edit_tab_1" role="tab">
+                        <a class="nav-link active tab-info-title" data-toggle="tab" href="#kt_user_edit_tab_1" id="user_edit_tab_1" role="tab">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <polygon points="0 0 24 0 24 24 0 24" />
@@ -15,14 +15,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" data-toggle="tab" href="#kt_user_edit_tab_2" role="tab" id="user_edit_tab_2">
+                        <a class="nav-link disabled tab-owner-title" data-toggle="tab" href="#kt_user_edit_tab_2" role="tab" id="user_edit_tab_2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                     <polygon points="0 0 24 0 24 24 0 24" />
                                     <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
                                     <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
                                 </g>
-                            </svg> Endereço
+                            </svg> Detalhes do Proprietário
                         </a>
                     </li>
                     <li class="nav-item">
@@ -55,11 +55,19 @@
             {{--<form action="{{ route('person.update', ['id' => $person->id]) }}" method="POST">
                 @method('PUT')--}}
             <div class="tab-content">
-                <div class="tab-pane active" id="kt_user_edit_tab_1" role="tabpanel">
+                <div class="tab-pane active" id="kt_user_edit_tab_1" role="tabpanel" >
                     <div class="kt-form kt-form--label-right">
                         <div class="kt-form__body">
                             <div class="kt-section kt-section--first">
                                 <div class="kt-section__body">
+                                    @if($edit)
+                                        <form action="{{ route('vehicle.update', ['id' => $vehicle->id]) }}" method="POST">
+
+                                        @method('PUT')
+                                    @else
+                                            <form action="{{ route('vehicle.store') }}" method="POST">
+                                    @endif
+
                                     <div class="row">
                                         <label class="col-xl-3"></label>
                                         <div class="col-lg-9 col-xl-6">
@@ -67,11 +75,12 @@
                                         </div>
                                     </div>
 
+
                                     <div class="form-group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">Modelo</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <select class="form-control kt-select2 car_id" id="kt_select2_2" name="car_id" required>
-                                                <option value="" selected></option>
+                                            <select class="form-control kt-select2 car_id tab-info select-input" id="car_id" name="car_id" required>
+                                                <option value="" selected>Selecione um modelo</option>
                                                 @foreach($brands as $b)
                                                     <optgroup label="{{ $b->brand }}"></optgroup>
                                                     @foreach($cars as $car)
@@ -82,6 +91,7 @@
                                                 @endforeach
 
                                             </select>
+                                            <span class="form-text text-danger" id="span_car_id_status" style="display: none;">Insira um valor válido</span>
                                         </div>
                                     </div>
 
@@ -92,7 +102,7 @@
                                             <div class="input-group" id="input-brand">
                                                 <span class="input-group-text"><i class="la la-truck"></i></span>
 
-                                                <input type="text" id="brand" name="brand" class="form-control tab-info" placeholder="Selecione um modelo acima" aria-describedby="basic-addon1" readonly>
+                                                <input type="text" id="brand" class="form-control tab-info" placeholder="Selecione um modelo acima" aria-describedby="basic-addon1" readonly>
                                             </div>
                                             <span class="form-text text-danger" id="span_brand_status" style="display: none;">Insira um valor válido</span>
                                         </div>
@@ -104,7 +114,7 @@
                                             <div class="input-group" id="input-version">
                                                 <span class="input-group-text"><i class="la la-tachometer"></i></span>
 
-                                                <input type="text" id="version" name="version" class="form-control tab-info" placeholder="Selecione um modelo acima" aria-describedby="basic-addon1" readonly>
+                                                <input type="text" id="version" class="form-control tab-info" placeholder="Selecione um modelo acima" aria-describedby="basic-addon1" readonly>
                                             </div>
                                             <span class="form-text text-danger" id="span_version_status" style="display: none;">Insira um valor válido</span>
                                         </div>
@@ -113,11 +123,107 @@
                                     <div class="form-group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">Ano Fabricação</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <select class="form-control kt-select2" id="year" name="year">
+                                            <select class="form-control kt-select2 tab-info" id="year" name="year">
                                                 <option value="" selected>Selecione um modelo acima</option>
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-3 col-sm-12">Cor</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <select class="form-control kt-select2 tab-info" id="color" name="color">
+                                                <option value="" selected>Selecione uma cor</option>
+                                                <option value="vermelho">Vermelho</option>
+                                                <option value="preto">Preto</option>
+                                                <option value="branco">Branco</option>
+                                                <option value="prata">Prata</option>
+                                                <option value="azul">Azul</option>
+                                                <option value="verde">Verde</option>
+                                                <option value="amarelo">Amarelo</option>
+                                                <option value="0">Outra</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Placa</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group" id="input-license_plate">
+                                                <span class="input-group-text"><i class="la la-car"></i></span>
+
+                                                <input type="text" id="license_plate" name="license_plate" value="@if($edit) {{ $vehicle->license_plate }} @endif"
+                                                       class="form-control tab-info" placeholder="Digite a placa do veículo" maxlength="8">
+                                            </div>
+                                            <span class="form-text text-danger" id="span_license_plate_status" style="display: none;">Insira uma placa válida</span>
+                                            <br>
+                                            <span>
+                                                <label class="kt-checkbox kt-checkbox--single kt-checkbox--solid">
+                                                    <input type="checkbox" id="mercosul" value="1">&nbsp;<span></span>
+                                                </label>
+                                                Placa Mercosul ?
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Chassi</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group" id="input-chassis">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-car"></i></span></div>
+                                                <input type="text" id="chassis" name="chassis" class="form-control tab-info" value="@if($edit) {{ $vehicle->chassis }}  @endif"
+                                                       placeholder="Numero do Chassi" aria-describedby="basic-addon1">
+                                            </div>
+
+                                            <span class="form-text text-danger" id="span_chassis_status" style="display:none;">Insira um número de chassis válido.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Km Rodados</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group" id="input-km">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-tachometer"></i></span></div>
+                                                <input type="number" id="km" name="km" class="form-control tab-info" value="@if($edit) {{ $vehicle->km }}  @endif"
+                                                       placeholder="Ex: 100.000"  aria-describedby="basic-addon1">
+                                            </div>
+
+                                            <span class="form-text text-danger" id="span_km_status" style="display:none;">Insira um número válido.</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Proprietário</label>
+                                        <div class="col-lg-6 col-md-6">
+                                            <select class="form-control kt-select2 tab-owner" id="owner_id" name="owner_id" required>
+                                                <option value="" @if(!$edit) selected @endif>Selecione um proprietário</option>
+                                                @foreach($owners as $owner)
+                                                    <option value="{{ $owner->id }}" @if($edit && $owner->id == $vehicle->owner->id) selected @endif >{{ $owner->name }}</option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <a href="javascript:" data-toggle="modal" data-target="#new_owner" class="btn btn-primary">
+                                                <i class="fa fa-plus"></i>
+                                                Proprietário
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Descrição</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group" id="input-description">
+                                                {{--<div class="input-group-prepend"><span class="input-group-text"><i class="la la-tachometer"></i></span></div>--}}
+                                                <textarea type="text" id="description" name="description" class="form-control tab-info" rows="10">@if($edit) {{ $vehicle->description }} @endif</textarea>
+                                            </div>
+
+                                            <span class="form-text text-danger" id="span_description_status" style="display:none;">Insira uma descrição válida.</span>
+                                        </div>
+                                    </div>
+
 
                                     {{--<div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Telefone</label>
@@ -129,19 +235,19 @@
                                             <span class="form-text text-muted">Insira apenas números.</span>
                                             <span class="form-text text-danger" id="span_cel_status" style="display:none;">Insira um número de telefone válido.</span>
                                         </div>
-                                    </div>
+                                    </div>--}}
 
-                                    <div class="form-group row">
+                                    <!-- Usado apenas para enganar o browser -->
+                                    <div class="form-group row email">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Email</label>
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="input-group" id="input-real-email">
                                                 <span class="input-group-text"><i class="la la-at"></i></span>
-
-                                                <input type="text" id="real-email" name="email" value="@if($edit) {{ $person->email }} @endif" class="form-control tab-info" placeholder="Digite o email do usuário" aria-describedby="basic-addon1">
+                                                <input type="text" id="real-email" value="@if($edit) {{ $person->email }} @endif" class="form-control tab-info" placeholder="Digite o email do usuário" aria-describedby="basic-addon1">
                                             </div>
                                             <span class="form-text text-danger" id="span_email_status" style="display: none;">Insira um email válido</span>
                                         </div>
-                                    </div>--}}
+                                    </div>
 
 
 
@@ -157,13 +263,14 @@
                                         </div>
 
                                         <div class="col-lg-5 col-xl-5">
-                                            <button class="btn btn-default next-tab" onclick="next_tab(2, 'tab-info')" disabled>
+                                            <button class="btn btn-default next-tab" onclick="next_tab(0, 'tab-info')" disabled>
                                                 <i class="la la-arrow-right"></i>
                                                 Próximo
                                             </button>
                                         </div>
                                     </div>
 
+                                    </form>
                                 </div>
 
                             </div>
@@ -179,7 +286,7 @@
                                     <div class="row">
                                         <label class="col-xl-3"></label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <h3 class="kt-section__title kt-section__title-sm">Endereço:</h3>
+                                            <h3 class="kt-section__title kt-section__title-sm" id="tab-owner-title">Proprietário:</h3>
                                         </div>
                                     </div>
 
@@ -198,7 +305,7 @@
                                 </div>
 
                                 <div class="col-lg-5 col-xl-5">
-                                    <button class="btn btn-default next-tab" onclick="next_tab(3, 'tab-address')" disabled>
+                                    <button class="btn btn-default next-tab" onclick="next_tab(3, 'tab-owner')" disabled>
                                         <i class="la la-arrow-right"></i>
                                         Próximo
                                     </button>
@@ -389,6 +496,121 @@
                 </div>
             </div>
             {{--</form>--}}
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="new_owner" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Novo Proprietário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="modal_name">Nome</label>
+                            <input type="text" placeholder="Nome do Proprietário" name="name" id="modal_name" class="form-control has-error" required>
+
+                            <span style="color: red; display: none;" id="span_name">Preencha este campo</span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="modal_cpf">CPF</label>
+                            <input type="text" placeholder="CPF do Proprietário" name="cpf" id="modal_cpf" class="form-control">
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label for="modal_email">Email</label>
+                            <input type="email" placeholder="Email do Proprietário" name="email" id="modal_email" class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="modal_cel">Celular</label>
+                            <input type="text" placeholder="Celular do Proprietário" name="cel" id="modal_cel" class="form-control phone" required>
+                            <span style="color: red; display: none;" id="span_cel">Preencha este campo</span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label for="zip_code">CEP</label>
+
+                            <div class="spinner_zip_code">
+                                <input type="text" placeholder="Ex: 18000-000" name="zip_code" id="zip_code" class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="street">Logradouro</label>
+                            <input type="text" placeholder="Ex: Rua 1" name="street" id="street" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label for="number">Número</label>
+                            <input type="text" placeholder="Ex: 500" name="number" id="number" class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="district">Bairro</label>
+                            <input type="text" placeholder="Bairro" name="district" id="district" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label for="city">Cidade</label>
+                            <input type="text" placeholder="Ex: Sorocaba" name="city" id="city" class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="state">UF</label>
+                            <select name="state" id="state" class="form-control">
+                                @foreach($states as $state)
+                                    <option value="{{ $state->initials }}">{{ $state->state }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fa fa-close"></i>
+                        Fechar
+                    </button>
+
+                    <button type="button" class="btn btn-primary" onclick="new_owner()">
+                        <i class="fa fa-check"></i>
+                        Salvar
+                    </button>
+                </div>
+
+
         </div>
     </div>
 </div>

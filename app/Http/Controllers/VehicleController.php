@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\CarRepository;
 use App\Repositories\PersonRepository;
+use App\Repositories\StatesRepository;
 use App\Repositories\VehicleRepository;
 use App\Repositories\WorkshopRepository;
 use App\Traits\Config;
@@ -26,15 +27,21 @@ class VehicleController extends Controller
      * @var WorkshopRepository
      */
     private $workshopRepository;
+    /**
+     * @var StatesRepository
+     */
+    private $statesRepository;
 
     public function __construct(VehicleRepository $repository, PersonRepository $personRepository,
-                                CarRepository $carRepository, WorkshopRepository $workshopRepository)
+                                CarRepository $carRepository, WorkshopRepository $workshopRepository,
+                                StatesRepository $statesRepository)
     {
 
         $this->repository = $repository;
         $this->personRepository = $personRepository;
         $this->carRepository = $carRepository;
         $this->workshopRepository = $workshopRepository;
+        $this->statesRepository = $statesRepository;
     }
 
     /**
@@ -105,14 +112,21 @@ class VehicleController extends Controller
 
         $edit = false;
 
+        $owners = $this->personRepository->findWhere(['workshop_id' => $this->get_user_workshop(), 'role_id' => 4]);
+
+        $states = $this->statesRepository->orderBy('state')->all();
+
         $links[] = '../../assets/css/pages/wizard/wizard-4.css';
 
         //$scripts[] = '../../assets/js/pages/custom/user/add-user.js';
         $scripts[] = '../../js/vehicle.js';
         $scripts[] = '../../assets/js/pages/crud/forms/widgets/bootstrap-maxlength.js';
         $scripts[] = '../../assets/js/pages/crud/forms/widgets/select2.js';
+        $scripts[] = '../../js/zipcode.js';
+        $scripts[] = '../../js/mask.js';
 
-        return view('index', compact('cars', 'route', 'links', 'scripts', 'edit', 'brands'));
+        return view('index', compact('cars', 'route', 'links', 'scripts',
+            'edit', 'brands', 'states', 'owners'));
     }
 
     /**
@@ -127,18 +141,26 @@ class VehicleController extends Controller
 
         $edit = true;
 
+        $states = $this->statesRepository->orderBy('state')->all();
+
         $links[] = '../../assets/css/pages/wizard/wizard-4.css';
 
         //$scripts[] = '../../assets/js/pages/custom/user/add-user.js';
         $scripts[] = '../../js/vehicle.js';
         $scripts[] = '../../assets/js/pages/crud/forms/widgets/bootstrap-maxlength.js';
         $scripts[] = '../../assets/js/pages/crud/forms/widgets/select2.js';
+        $scripts[] = '../../js/zipcode.js';
+        $scripts[] = '../../js/mask.js';
+
 
         $vehicle = $this->repository->findByField('id', $id)->first();
 
+        $owners = $this->personRepository->findWhere(['workshop_id' => $this->get_user_workshop(), 'role_id' => 4]);
+
         if($vehicle)
         {
-            return view('index', compact('cars', 'route', 'edit', 'links', 'scripts', 'vehicle', 'brands'));
+            return view('index', compact('cars', 'route', 'edit', 'links', 'scripts',
+                'vehicle', 'brands', 'states', 'owners'));
         }
 
         abort(404);
@@ -176,7 +198,7 @@ class VehicleController extends Controller
 
             $request->session()->flash('success.msg', 'Veículo cadastrado com sucesso');
 
-            return redirect()->route('vehicle.index');
+            redirect()->route('vehicle.index');
 
         }catch (\Exception $e)
         {

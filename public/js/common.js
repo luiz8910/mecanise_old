@@ -27,7 +27,39 @@ $(function () {
             return false;
     });
 
+    $("#cpf").change(function () {
+
+        before_validate_cpf();
+    });
+
+
+    $("#modal_cpf").change(function () {
+
+        before_validate_cpf('modal_cpf');
+    });
+
+    $("#chassis").change(function () {
+        validate_chassis();
+    })
 });
+
+function before_validate_cpf($input)
+{
+    $input = $input ? $input : 'cpf';
+
+    if($("#"+$input).val().length == 11)
+    {
+        if(!validate_cpf($input))
+        {
+            sweet_alert_error('CPF inválido');
+
+            $("#"+$input).addClass('input-error');
+        }
+        else{
+            $("#"+$input).removeClass('input-error');
+        }
+    }
+}
 
 function sweet_alert($data, $ajax)
 {
@@ -137,11 +169,10 @@ function next_tab($tab, $class)
     if(fields.length > 0)
     {
         var i = 0;
-        var errors = 0;
+        var errors = localStorage.getItem('errors') ? localStorage.getItem('errors') : 0;
 
         while (i < fields.length)
         {
-
             if(fields[i].value === '' && fields[i].getAttribute('required') !== null)
             {
                 var id = fields[i].id;
@@ -202,6 +233,87 @@ function spinner_input($function, $id, $class)
     }
 
 }
+
+/*
+ Validate CPF
+ */
+function validate_cpf($input_id)
+{
+    var cpf = $input_id ? $("#"+$input_id).val() : $("#cpf").val();
+
+    cpf = cpf.replace(/[^\d]+/g,'');
+
+    if(cpf == '')
+        return false;
+
+    // Elimina CPFs invalidos conhecidos
+    if (cpf.length != 11 ||
+        cpf == "00000000000" ||
+        cpf == "11111111111" ||
+        cpf == "22222222222" ||
+        cpf == "33333333333" ||
+        cpf == "44444444444" ||
+        cpf == "55555555555" ||
+        cpf == "66666666666" ||
+        cpf == "77777777777" ||
+        cpf == "88888888888" ||
+        cpf == "99999999999")
+        return false;
+
+    // Valida 1o digito
+    add = 0;
+    for (i=0; i < 9; i ++)
+        add += parseInt(cpf.charAt(i)) * (10 - i);
+
+    rev = 11 - (add % 11);
+
+    if (rev == 10 || rev == 11)
+        rev = 0;
+
+    if (rev != parseInt(cpf.charAt(9)))
+        return false;
+
+    // Valida 2o digito
+    add = 0;
+
+    for (i = 0; i < 10; i ++)
+        add += parseInt(cpf.charAt(i)) * (11 - i);
+
+    rev = 11 - (add % 11);
+
+    if (rev == 10 || rev == 11)
+        rev = 0;
+
+    if (rev != parseInt(cpf.charAt(10)))
+        return false;
+
+    return true;
+}
+
+/*
+ Validate chassis number
+ */
+function validate_chassis()
+{
+    var chassis = $("#chassis").val();
+
+    if(chassis.length < 17 && chassis.length > 0)
+    {
+        $("#span_chassis_status").css('display', 'block');
+
+        $("#input-chassis").addClass('border-red');
+
+        localStorage.getItem('errors') ? localStorage.setItem('errors', localStorage.getItem('errors') + 1) : localStorage.setItem('errors', 1);
+    }
+    else{
+        $("#span_chassis_status").css('display', 'none');
+
+        $("#input-chassis").removeClass('border-red');
+
+        localStorage.getItem('errors') ? localStorage.setItem('errors', localStorage.getItem('errors') - 1) : localStorage.removeItem('errors');
+    }
+}
+
 
 $(document).on('click', 'button', function () {
 

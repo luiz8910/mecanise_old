@@ -151,21 +151,33 @@ function new_owner()
 
     var state = $("#state").val();
 
+    name.removeClass('input-error');
+    cel.removeClass('input-error');
+
     if (name === "")
     {
+        name.addClass('input-error');
+
         $("#span_name").css('display', 'block');
         return false;
     }
 
     if(cel === "")
     {
+        cel.addClass('input-error');
+
         $("#span_cel").css('display', 'block');
         return false;
     }
 
+    var modal = $(".modal");
+
+
+
     $.ajax({
         url: '/person',
         method: 'POST',
+        dataType: 'json',
         data:{
             'name': name,
             'cpf': cpf,
@@ -180,7 +192,6 @@ function new_owner()
             'role_id': 4,
             'origin': 'json'
         },
-        dataType: 'json'
 
     }).done(function (e) {
 

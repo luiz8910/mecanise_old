@@ -520,14 +520,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="modal_name">Nome</label>
-                            <input type="text" placeholder="Nome do Proprietário" name="name" id="modal_name" class="form-control has-error" required>
+                            <input type="text" placeholder="Nome do Proprietário" name="name" id="modal_name" class="form-control modal" required>
 
                             <span style="color: red; display: none;" id="span_name">Preencha este campo</span>
                         </div>
 
                         <div class="col-md-6">
                             <label for="modal_cpf">CPF</label>
-                            <input type="text" placeholder="CPF do Proprietário" name="cpf" id="modal_cpf" class="form-control">
+                            <input type="text" placeholder="CPF do Proprietário" name="cpf" id="modal_cpf" class="form-control modal">
                         </div>
 
                     </div>
@@ -536,12 +536,12 @@
 
                         <div class="col-md-6">
                             <label for="modal_email">Email</label>
-                            <input type="email" placeholder="Email do Proprietário" name="email" id="modal_email" class="form-control">
+                            <input type="email" placeholder="Email do Proprietário" name="email" id="modal_email" class="form-control modal">
                         </div>
 
                         <div class="col-md-6">
                             <label for="modal_cel">Celular</label>
-                            <input type="text" placeholder="Celular do Proprietário" name="cel" id="modal_cel" class="form-control phone" required>
+                            <input type="text" placeholder="Celular do Proprietário" name="cel" id="modal_cel" class="form-control modal phone" required>
                             <span style="color: red; display: none;" id="span_cel">Preencha este campo</span>
                         </div>
                     </div>
@@ -554,14 +554,14 @@
                             <label for="zip_code">CEP</label>
 
                             <div class="spinner_zip_code">
-                                <input type="text" placeholder="Ex: 18000-000" name="zip_code" id="zip_code" class="form-control">
+                                <input type="text" placeholder="Ex: 18000-000" name="zip_code" id="zip_code" class="form-control modal">
                             </div>
 
                         </div>
 
                         <div class="col-md-6">
                             <label for="street">Logradouro</label>
-                            <input type="text" placeholder="Ex: Rua 1" name="street" id="street" class="form-control">
+                            <input type="text" placeholder="Ex: Rua 1" name="street" id="street" class="form-control modal">
                         </div>
                     </div>
 
@@ -569,12 +569,12 @@
 
                         <div class="col-md-6">
                             <label for="number">Número</label>
-                            <input type="text" placeholder="Ex: 500" name="number" id="number" class="form-control">
+                            <input type="text" placeholder="Ex: 500" name="number" id="number" class="form-control modal">
                         </div>
 
                         <div class="col-md-6">
                             <label for="district">Bairro</label>
-                            <input type="text" placeholder="Bairro" name="district" id="district" class="form-control">
+                            <input type="text" placeholder="Bairro" name="district" id="district" class="form-control modal">
                         </div>
                     </div>
 
@@ -582,12 +582,12 @@
 
                         <div class="col-md-6">
                             <label for="city">Cidade</label>
-                            <input type="text" placeholder="Ex: Sorocaba" name="city" id="city" class="form-control">
+                            <input type="text" placeholder="Ex: Sorocaba" name="city" id="city" class="form-control modal">
                         </div>
 
                         <div class="col-md-6">
                             <label for="state">UF</label>
-                            <select name="state" id="state" class="form-control">
+                            <select name="state" id="state" class="form-control modal">
                                 @foreach($states as $state)
                                     <option value="{{ $state->initials }}">{{ $state->state }}</option>
                                 @endforeach

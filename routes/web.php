@@ -151,3 +151,5 @@ Auth::routes();
 //Testes
 
 Route::get('get_session', 'TesteController@get_session');
+
+Route::get('/domains/{length?}', "VehicleController@domains");
